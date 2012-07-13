@@ -1,10 +1,10 @@
-- if current_user
-  #J_app.container
-    .global-notice.fn-hide
-      = styled_flash
-    #J_globalAlert.alert.fn-hide
-      %button.close{:type => "button", :data => {:dismiss => "alert"}} ×
-      %strong Warning!
+#J_app.container
+  .global-notice.fn-hide
+    = styled_flash
+  #J_globalAlert.alert.fn-hide
+    %button.close{:type => "button", :data => {:dismiss => "alert"}} ×
+    %strong Warning!
+  - if current_user
     .row
       .span3
         .well.sidebar-nav
@@ -47,7 +47,7 @@
                     %input#J_addTask.btn.btn-large.btn-primary.btn-main{:type => "button", :value => "New Task >>"}/
             %ul.tasks
     = haml :template
-    %hr
-    %footer
-      %p 
-        © Kenshin 2012 
+  %hr
+  %footer
+    %p 
+      © Kenshin 2012 

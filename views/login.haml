@@ -1,11 +1,21 @@
-.container
+#J_app.container
+  .global-notice.fn-hide
+    = styled_flash
+  #J_globalAlert.alert.fn-hide
+    %button.close{:type => "button", :data => {:dismiss => "alert"}} ×
+    %strong Warning!
   %h3 
     Login
-    %form{:action => "/login", :method => "post"}
-      %p
-        %label{:for => "email"} Email
-        %input{:type => "text", :name => "email", :value => "#{params[:email]}"}/
-      %p
-        %label{:for => "password"} Password
-        %input{:type => "password", :name => "password"}/
-      %input.btn.btn-large.btn-primary{:type => "submit", :value => "Login"}/
+  %hr
+  %form{:action => "/login", :method => "post"}
+    %p
+      %label{:for => "email"} Email
+      %input{:type => "text", :name => "email", :value => "#{params[:email]}"}/
+    %p
+      %label{:for => "password"} Password
+      %input{:type => "password", :name => "password"}/
+    %input.btn.btn-large.btn-primary{:type => "submit", :value => "Login"}/
+  %hr
+  %footer
+    %p 
+      © Kenshin 2012 

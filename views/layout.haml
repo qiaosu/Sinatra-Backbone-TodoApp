@@ -29,3 +29,5 @@
     %script{:src => "/javascripts/underscore.js"}
     %script{:src => "/javascripts/backbone.js"}
     %script{:src => "/javascripts/todo-app.js"}
+    - if current_user
+      %script{:src => "/javascripts/todo-task.js"}
