@@ -1,0 +1,11 @@
+.container
+  %h3 
+    Login
+    %form{:action => "/login", :method => "post"}
+      %p
+        %label{:for => "email"} Email
+        %input{:type => "text", :name => "email", :value => "#{params[:email]}"}/
+      %p
+        %label{:for => "password"} Password
+        %input{:type => "password", :name => "password"}/
+      %input.btn.btn-large.btn-primary{:type => "submit", :value => "Login"}/

@@ -1,0 +1,122 @@
+form.update{
+  position:absolute;
+  bottom:2px;
+  left:0;
+}
+form.update input{
+  background:white;
+  color:white;
+  padding:0 2px;
+  border:solid 1px gray;
+  cursor:pointer;
+}
+.tasks li.completed form.update input{
+  color:#47FD6B;
+}
+form.delete{
+  display:inline;
+}
+form.delete input{
+  background:none;
+  cursor:pointer;
+  border:none;
+}
+.lists{
+  padding:0;
+  list-style:none;
+  overflow:hidden;
+}
+.list{
+  float: left;
+  width:23%;
+  margin:0 1%;
+  border-top:solid 5px #ccc;
+}
+
+/*********** function ************/
+.fn-left {
+  float: left;
+}
+
+.fn-right {
+  float: right;
+}
+
+.fn-hide {
+  display: none;
+}
+
+/*********** layout ***********/
+body {
+  padding: 70px 0 40px;
+}
+
+.navbar-fixed-top .brand {
+  font-weight: 300;
+  color: white;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .1), 0 0 30px rgba(0, 0, 0, .125);
+  -webkit-transition: all .2s linear;
+  -moz-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.welcomebar {
+  float:right;
+  padding:11px 0;
+  line-height: 18px;
+  height: 18px;
+}
+
+.sidebar-nav h4 {
+  margin: 0 0 10px;
+}
+
+.sidebar-nav h4 .more {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.nav-item .icon-remove {
+  margin-top: 2px;
+  float: right;
+}
+
+.list-destroy {
+  display: none;
+}
+
+.add-list {
+  margin: 30px 0 0;
+}
+
+.add-task {
+  margin-left: 25px;
+}
+
+.input-task {
+  height: 27px;
+}
+
+.btn-main {
+  padding: 9px 57px;
+}
+
+li.task .actions {
+  float: right;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.tasks {
+  margin-top: 20px;
+  padding:0 0 20px;
+  list-style:none;
+}
+
+.task {
+  position:relative;
+  padding:8px 0 8px 14px;
+  border-bottom: dotted 1px #ccc;
+}

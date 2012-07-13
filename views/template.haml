@@ -1,0 +1,14 @@
+/ Templates
+%script#J_taskTemplate{"type" => "text/template"}  
+  %li{:class => "task clearfix"}
+    %span.task-content <%= name %>
+    .actions
+      <% if (completed_at) { %>
+      %a.J_taskActive{:href => "#"}
+        %span.label.label-warning active
+      <% } else { %>
+      %a.J_taskComplete{:href => "#"}
+        %span.label.label-success complete
+      <% } %>
+      %a.J_taskDelete{:href => "#"}
+        %span.label.label-info delete

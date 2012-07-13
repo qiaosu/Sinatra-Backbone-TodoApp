@@ -1,0 +1,18 @@
+.container
+  %h3 
+    Register
+    - if session[:errors]
+      %ul
+        - for error in session[:errors]
+          %li= error
+    %form{:action => "/signup", :method => "post"}
+      %p
+        %label{:for => "user[email]"} Email
+        %input{:type => "text", :name => "user[email]", :value => "#{params[:email]}"}/
+      %p
+        %label{:for => "user[password]"} Password
+        %input{:type => "password", :name => "user[password]"}/
+      %p
+        %label{:for => "user[password_confirmation]"} Password Confirmation
+        %input{:type => "password", :name => "user[password_confirmation]"}/
+      %input.btn.btn-large.btn-primary{:type => "submit", :value => "Register"}/

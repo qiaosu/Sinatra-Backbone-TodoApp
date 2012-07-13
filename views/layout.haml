@@ -1,0 +1,31 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "utf-8"}/
+    %title Todo App
+    %link{:rel => "stylesheet", :media => "screen, projection", :href => "/stylesheets/bootstrap.min.css"}
+    %link{:rel => "stylesheet", :media => "screen, projection", :href => "/stylesheets/bootstrap-responsive.css"}
+    %link{:rel => "stylesheet", :media => "screen, projection", :href => "/stylesheets/style.css"}
+    /[if lt IE 9]
+      %script{:src => "http://html5shiv.googlecode.com/svn/trunk/html5.js"}
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container.clearfix
+          %a.brand{:href => "#"} To-do App
+          .welcomebar.fn-right
+            - if current_user
+              %p 
+                Logged in as #{current_user.email}
+                = " | "
+                %a{:href => "/logout"} logout
+            - else
+              %p
+                %a{:href => "/login"} login
+                = " | "
+                %a{:href => "/signup"} register
+    = yield
+    %script{:src => "/javascripts/jquery-latest.js"}
+    %script{:src => "/javascripts/underscore.js"}
+    %script{:src => "/javascripts/backbone.js"}
+    %script{:src => "/javascripts/todo-app.js"}
