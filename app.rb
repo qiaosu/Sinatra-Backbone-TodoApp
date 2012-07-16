@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'json'
+require 'haml'
 require 'sinatra'
 require "sinatra/flash"
 require 'data_mapper'
@@ -62,6 +63,7 @@ class Task
 end
 
 DataMapper.finalize
+DataMapper.auto_upgrade!
 
 #routes
 get '/' do
