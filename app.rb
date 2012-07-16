@@ -159,7 +159,7 @@ post '/new/list' do
 end
 
 get '/list/:id' do
-  tasks = List.get(params[:id]).tasks;
+  tasks = List.get(params[:id]).tasks unless List.get(params[:id]).nil?
 
   tasks.to_json
 end
