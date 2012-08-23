@@ -1,10 +1,8 @@
-source 'http://ruby.taobao.org'
+source 'http://rubygems.org'
 
 gem 'thin'
 gem 'json'
 gem 'data_mapper'
-gem 'dm-sqlite-adapter'
-gem 'sqlite3'
 gem 'haml'
 gem 'sinatra', :git => 'git://github.com/sinatra/sinatra.git'
 gem "sinatra-flash"

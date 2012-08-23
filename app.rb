@@ -4,7 +4,6 @@ require 'haml'
 require 'sinatra'
 require "sinatra/flash"
 require 'data_mapper'
-require 'dm-sqlite-adapter'
 require 'securerandom'
 require 'bcrypt'
 
@@ -12,7 +11,7 @@ enable :sessions
 
 require "./helpers"
 
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 class User
   include DataMapper::Resource
