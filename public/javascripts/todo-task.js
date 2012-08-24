@@ -6,7 +6,8 @@ window.TaskModel = Backbone.Model.extend({
 	attributes: {
 		'id': null,
 		'name': "",
-		'completed_at': null
+		'completed_at': null,
+		'annotations': 0
 	},
 	initialize: function(){}
 });
@@ -31,7 +32,8 @@ window.TasksView = Backbone.View.extend({
 		'click .J_taskActive': 'taskUpdate',
 		'click #J_addTask': 'mainBtnSubmit',
 		'click .J_taskDelete': 'taskDestroy',
-		'keyup #J_inputTask': 'checkAutoSubmit'
+		'keyup #J_inputTask': 'checkAutoSubmit',
+		'click .J_taskAnnotate': 'toggleAnnotations'
 	},
 	/** 
 	 * 模板文件: views/template.haml 
@@ -195,6 +197,58 @@ window.TasksView = Backbone.View.extend({
 		var _target = $(this.el).find('li#'+_id);
 		this.model.remove(this.model.get(_id));
 		_target.remove();
+	},
+	/**
+	 * 显示批注
+	 */
+	showAnnotations: function(id){
+		$(this.el).find('.annotations').addClass('fn-hide');
+		$(this.el).find('#'+id).find('.annotations').removeClass('fn-hide');
+	},
+	/**
+	 * 隐藏批注
+	 */
+	hideAnnotations: function(id){
+		$(this.el).find('#'+id).find('.annotations').addClass('fn-hide');
+	},
+	/**
+	 * 切换批注显示隐藏
+	 */
+	toggleAnnotations: function(e){
+		var _target = $(e.target),
+			_item = _target.parents('.task'),
+			_id = _item.attr('id');
+		this.getAnnotations(_id);
+		if (_item.find('.annotations').hasClass('fn-hide')) {
+			this.showAnnotations(_id);
+		} else {
+			this.hideAnnotations(_id);
+		}
+	},
+	/**
+	 * 请求批注
+	 */
+	getAnnotations: function(id){
+		var url = '/annotation/'+id, 
+			_self = this;
+		$.ajax({
+			url: url,
+			type: 'GET',
+			success: function(res, status, xhr){
+				_self.renderAnnotations(id, eval('('+res+')'));
+			},
+			error: _self.error
+		});
+	},
+	renderAnnotations: function(id, data){
+		var root = $(this.el).find('#'+id).find('.annotations');
+		root.children().remove();
+		if (data.length>0){
+			_.each(data, function(item){
+				root.append('<div class="annotation md-show">'+item.content+'</div>');
+			});
+		}
+		root.append($('#md-editor-container').html());
 	},
 	/** 
 	 * 获得task的dom模板 

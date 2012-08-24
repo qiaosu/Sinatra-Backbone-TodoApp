@@ -3,15 +3,18 @@ require 'json'
 require 'haml'
 require 'sinatra'
 require "sinatra/flash"
+require "debugger"
 require 'data_mapper'
+require 'dm-sqlite-adapter'
 require 'securerandom'
 require 'bcrypt'
+require 'glorify'
 
 enable :sessions
 
 require "./helpers"
 
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
 
 class User
   include DataMapper::Resource
@@ -57,8 +60,20 @@ class Task
   include DataMapper::Resource
   property :id,           Serial
   property :name,         String, :required => true
+  property :created_at,   DateTime
   property :completed_at, DateTime
+  property :sub_annotations, Integer, :default => 0
   belongs_to :list
+
+  has n, :annotations
+end
+
+class Annotation
+  include DataMapper::Resource
+  property :id,           Serial
+  property :content,      Text
+  property :created_at,   DateTime
+  belongs_to :task
 end
 
 DataMapper.finalize
@@ -166,4 +181,13 @@ end
 delete '/list/:id' do
   List.get(params[:id]).destroy
   redirect to('/')
+end
+
+get '/annotation/:id' do
+  annotations = Task.get(params[:id]).annotations unless Task.get(params[:id]).nil?
+  annotations.each do |annote|
+    annote.content = glorify annote.content
+  end
+
+  annotations.to_json
 end
