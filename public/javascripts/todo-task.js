@@ -33,7 +33,8 @@ window.TasksView = Backbone.View.extend({
 		'click #J_addTask': 'mainBtnSubmit',
 		'click .J_taskDelete': 'taskDestroy',
 		'keyup #J_inputTask': 'checkAutoSubmit',
-		'click .J_taskAnnotate': 'toggleAnnotations'
+		'click .J_taskAnnotate': 'toggleAnnotations',
+		'click .J_annoteSubmit': 'annoteCreate'
 	},
 	/** 
 	 * 模板文件: views/template.haml 
@@ -249,6 +250,39 @@ window.TasksView = Backbone.View.extend({
 			});
 		}
 		root.append($('#md-editor-container').html());
+	},
+	appendAnnotation: function(id, data){
+		var _root = $(this.el).find('#'+id),
+			_target = _root.find('.md-editor');
+		if (data !== ""){
+			_target.before('<div class="annotation md-show">'+data.content+'</div>');
+		}
+		var index = _root.find('.J_taskAnnotate span').text();
+		index = parseInt(index) ? parseInt(index) : 0;
+		index = index + 1;
+		_root.find('.J_taskAnnotate span').text(index);
+		_root.find('.md-editor textarea').attr('value', '');
+	},
+	annoteCreate: function(e){
+		var _target = $(e.target),
+			_item = _target.parents('.md-editor'),
+			_id = _item.parents('.task').attr('id');
+			_content = _item.children('textarea').attr('value'),
+			_self = this;
+		if (_content == "") return false;
+		var url = '/new/annotation';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {
+				'task': _id,
+				'content': _content
+			},
+			success: function(res, status, xhr){
+				_self.appendAnnotation(_id, eval('('+res+')'));
+			},
+			error: _self.error
+		});
 	},
 	/** 
 	 * 获得task的dom模板 

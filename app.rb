@@ -65,7 +65,7 @@ class Task
   property :sub_annotations, Integer, :default => 0
   belongs_to :list
 
-  has n, :annotations
+  has n, :annotations, :constraint => :destroy
 end
 
 class Annotation
@@ -190,4 +190,14 @@ get '/annotation/:id' do
   end
 
   annotations.to_json
+end
+
+post '/new/annotation' do
+  task = Task.get(params[:task])
+  annote = task.annotations.create(:content => params[:content])
+  task.update(:sub_annotations =>task.sub_annotations+1)
+
+  annote = task.annotations.last
+  annote.content = glorify annote.content
+  annote.to_json
 end

@@ -154,3 +154,8 @@ li.task .actions {
   padding: 6px 0 6px 12px;
   margin: 0 0 10px;
 }
+
+.md-editor textarea {
+  width: 70%;
+  height: 120px;
+}
