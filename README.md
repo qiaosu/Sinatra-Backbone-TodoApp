@@ -2,8 +2,14 @@ Sinatra-Backbone-TodoApp
 ========================
 
 Omniauth, Project, Task | Backbone, Bootstrap, Sinatra, DataMapper, Sqlite3...
+Online Demo: [http://todo.decimage.com]
 
-###features:
+###New in 8.24
+
+add Annotation feature.
+support Markdown.
+
+###Features:
 
 + RESTful
 + front-end MVC
