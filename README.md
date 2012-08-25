@@ -7,13 +7,13 @@ Online Demo: [http://todo.decimage.com]
 ###New in 8.24
 
 add Annotation feature.
-support Markdown.
 
 ###Features:
 
 + RESTful
 + front-end MVC
 + Omniauth
++ MarkDown Support
 
 ###Install:
 
