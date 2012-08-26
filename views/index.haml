@@ -45,12 +45,15 @@
                 .input-append
                   %input#J_inputTask.span7.input-task{:type => "text", :name => "task[name]", :maxLength => "100"}<
                     %input#J_addTask.btn.btn-large.btn-primary.btn-main{:type => "button", :value => "New Task >>"}/
-            %ul.tasks
+            .tasks-container
+              %ul.tasks
     = haml :template
     #md-editor-container.fn-hide
       .md-editor
         %textarea{:name => "annotation"}
         %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
+    #timeline-container
+      = haml :timeline
   %hr
   %footer
     %p 
