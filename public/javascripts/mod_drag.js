@@ -3,9 +3,9 @@
 }('Drag', function() {
     function Drag() {
         var drag = {
-            element:        "",
-            element_move:   "",
-            constraint:     "",
+            element:        "",     //handler
+            element_move:   "",     //实际移动元素
+            constraint:     "",     //约束{left, right, right_min, right_max}
             sliding:        false,
             pagex: {
                 start:      0,
@@ -72,6 +72,9 @@
         
         var makeDraggable = function(drag_object, move_object) {
             
+            /**
+             * 绑定drag事件
+             */
             $(drag_object).on(dragevent.down, {element: move_object, delement: drag_object}, onDragStart);
             $(drag_object).on(dragevent.up, {element: move_object, delement: drag_object}, onDragEnd);
             $(drag_object).on(dragevent.leave, {element: move_object, delement: drag_object}, onDragLeave);
@@ -201,13 +204,13 @@
                     //$(elem).css('left', drag_info.left);
                     
                     //$(elem).animate({"left": drag_info.left}, drag_info.time, "easeOutQuad");
-                    $(elem).animate({"left": drag_info.left}, drag_info.time, "easeOut");
+                    $(elem).animate({"left": drag_info.left}, {duration: drag_info.time, easing: "easeOutExpo" });
                     //$(elem).css('webkitTransition', '');
                     //$(elem).css('webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
                     //$(elem).css('webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
 
                 } else {
-                    $(elem).animate({"left": drag_info.left}, drag_info.time, drag.ease);
+                    $(elem).animate({"left": drag_info.left}, {duration: drag_info.time, easing: drag.ease });
                 }
             }
             
