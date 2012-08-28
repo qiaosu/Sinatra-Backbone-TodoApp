@@ -33,6 +33,10 @@ form.delete input{
   border-top:solid 5px #ccc;
 }
 
+.container .row {
+  margin-bottom: 20px;
+}
+
 /*********** function ************/
 .fn-left {
   float: left;
@@ -142,12 +146,12 @@ li.task .actions {
 }
 
 .tasks-container {
-  height: 254px;
   margin: 20px 0;
+  /*height: 254px;
   overflow-x: hidden;
   overflow: visible;
   overflow-y: auto;
-  position: relative;
+  position: relative;*/
 }
 
 .tasks {
@@ -206,6 +210,11 @@ li.task .actions {
   margin: 0 !important;
   clear: both;
 }
+
+#timeline-container h4 {
+  margin: 0 0 10px;
+}
+
 .thumbnail{width:24px;height:24px;overflow:hidden;float:left;margin:0;margin-right:1px;margin-top:6px;border:0;padding:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
 a.thumbnail:hover{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
 .thumbnail.thumb-plaintext{background-image:url(../img/timeline.png?v3.4);background-repeat:no-repeat;background-position:-280px -48px;}

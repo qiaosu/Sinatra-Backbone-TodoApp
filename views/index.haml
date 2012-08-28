@@ -52,8 +52,11 @@
       .md-editor
         %textarea{:name => "annotation"}
         %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
-    #timeline-container
-      = haml :timeline
+    .row
+      .span12
+        #timeline-container
+          %h4 Project's Timeline
+          = haml :timeline
   %hr
   %footer
     %p 

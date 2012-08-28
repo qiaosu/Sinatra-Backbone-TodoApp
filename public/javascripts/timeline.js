@@ -1,19 +1,18 @@
 window.TimelineView = Backbone.View.extend({
 	el: $('#timeline-container'),
 	events: {},
-	initialize: function(){
+	initialize: function(config){
+		_.bindAll(this);
+		this.config = config;
+		this.timenav = $(this.el).find('.timenav');
+
 		// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 		this.drag = new _.Drag();
-		this.drag.createPanel('#timeline-container .navigation', $(this.el).find('.timenav'), {
-			left: 0,
-			right: -562.2222222222022,
-			right_max: 0,
-			right_min: -1282.2222222222022
-		}, false);
+		this.drag.createPanel('#timeline-container .navigation', this.timenav, this.config.nav.constraint, false);
 
 		// MOUSE EVENTS
-		$('#timeline-container .navigation').on('DOMMouseScroll', this.onMouseScroll);
-		$('#timeline-container .navigation').on('mousewheel', this.onMouseScroll);
+		$('.navigation', this.el).on('DOMMouseScroll', this.onMouseScroll);
+		$('.navigation', this.el).on('mousewheel', this.onMouseScroll);
 
 		console.log('timeline.');
 	},
@@ -48,18 +47,29 @@ window.TimelineView = Backbone.View.extend({
 		}
 		
 		// Stop from scrolling too far
-		scroll_to = VMM.Lib.position($timenav).left + delta;
 		
-		if (scroll_to > config.nav.constraint.left) {
-			scroll_to = config.width/2;
-		} else if (scroll_to < config.nav.constraint.right) {
-			scroll_to = config.nav.constraint.right;
+		scroll_to = $(this.timenav).position().left + delta;
+		
+		if (scroll_to > this.config.nav.constraint.left) {
+			scroll_to = this.config.width/2;
+		} else if (scroll_to < this.config.nav.constraint.right) {
+			scroll_to = this.config.nav.constraint.right;
 		}
 		
-		//VMM.Lib.stop($timenav);
-		//VMM.Lib.animate($timenav, config.duration/2, "linear", {"left": scroll_to});
-		VMM.Lib.css($timenav, "left", scroll_to);	
+		//$(this.timenav).stop();
+		//$(this.timenav).animate({"left": scroll_to}, config.duration/2, "linear");
+		$(this.timenav).css("left", scroll_to);	
 	}
 })
 
-window.timelineView = new window.TimelineView();
+window.timelineView = new window.TimelineView({
+	nav: {
+		constraint: {
+			left: 0,
+			right: -562.2222222222022,
+			right_max: 0,
+			right_min: -1282.2222222222022
+		}
+	},
+	width: 1170
+});
