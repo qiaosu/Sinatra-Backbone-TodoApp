@@ -6,6 +6,8 @@ window.STATICS.keysMap = {
 	ENTER: 13
 } 
 
+window.events = _.clone(Backbone.Events);
+
 /** 
  * App-View
  * 页面级View, 请保持唯一, 且作为入口. 
@@ -19,6 +21,9 @@ window.AppView = Backbone.View.extend({
 		'click .sidebar-nav .nav-list a': 'listSelect',
 		'click #J_globalAlert .close': 'closeGlobalNotice'
 	},
+	suscribe: function(){
+		window.events.on('TIMELINEINIT', this.timelineInit, this);
+	},
 	/** 
 	 * 初始化
 	 * 选择第一条list作为激活的list 
@@ -26,6 +31,8 @@ window.AppView = Backbone.View.extend({
 	initialize: function(){
 		var _id = $(this.el).find('.sidebar-nav li:first').attr('data-id');
 		if (window.STATICS) {window.STATICS.currentList = _id;}
+
+		this.suscribe();
 
 		var _notice = $('.global-notice').text().trim();
 		if (_notice) {
@@ -88,6 +95,41 @@ window.AppView = Backbone.View.extend({
 	closeGlobalNotice: function(e){
 		$('#J_globalAlert').addClass('fn-hide');
 		clearTimeout(this.t);
+	},
+	timelineInit: function(listId, status){
+		var data = status, start, end;
+		data = this.prepareTimelineData(data);
+
+		start = $('.nav-list li[data-id="'+listId+'"]', this.el).attr('data-create');
+		
+		/**
+		 * init timeline
+		 */
+		window.timelineView = new window.TimelineView({
+			nav: {
+				constraint: {
+					width: 1170
+				},
+				date: {
+					start_date: (new Date(start).valueOf() - 1000 * 3600 * 24 * 10),
+					end_date: (new Date().valueOf() + 1000 * 3600 * 24 * 10)
+				},
+				interval: {
+					unit: 'day',
+					step: 30
+				}
+			},
+			data: data
+		});
+	},
+	prepareTimelineData: function(data){
+		var result = [];
+		for (var item in data) {
+			if (data[item]['completed_at']){
+				result.push(data[item]);
+			}
+		}
+		return result;
 	}
 })
 

@@ -78,6 +78,10 @@
             $(drag_object).on(dragevent.down, {element: move_object, delement: drag_object}, onDragStart);
             $(drag_object).on(dragevent.up, {element: move_object, delement: drag_object}, onDragEnd);
             $(drag_object).on(dragevent.leave, {element: move_object, delement: drag_object}, onDragLeave);
+
+            // MOUSE EVENTS
+            $(drag_object).on('DOMMouseScroll', onMouseScroll);
+            $(drag_object).on('mousewheel', onMouseScroll);
             
         }
         this.cancelSlide = function(e) {
@@ -155,7 +159,6 @@
             }
             drag.left.end = getLeft(elem);
             $(elem).css('left', -(drag.pagex.start - drag.pagex.end - drag.left.start));
-            
         }
         var dragMomentum = function(elem, e) {
             var drag_info = {
@@ -217,6 +220,50 @@
         }
         var getLeft = function(elem) {
             return parseInt($(elem).css('left').substring(0, $(elem).css('left').length - 2), 10);
+        }
+        var onMouseScroll = function(e) {
+            var delta       = 0,
+                scroll_to   = 0,
+                timenav = $(drag.element).find('.timenav');
+            if (!e) {
+                e = window.event;
+            }
+            if (e.originalEvent) {
+                e = e.originalEvent;
+            }
+            if (e.wheelDelta) {
+                delta = e.wheelDelta/6;
+            } else if (e.detail) {
+                delta = -e.detail*12;
+            }
+            if (delta) {
+                if (e.preventDefault) {
+                     e.preventDefault();
+                }
+                e.returnValue = false;
+            }
+            // Webkit
+            if (typeof e.wheelDeltaX != 'undefined' ) {
+                delta = e.wheelDeltaY/6;
+                if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
+                    delta = e.wheelDeltaX/6;
+                } else {
+                    delta = e.wheelDeltaY/6;
+                }
+            }
+            
+            // Stop from scrolling too far
+            scroll_to = $(timenav).position().left + delta;
+            
+            if (scroll_to > drag.constraint.left) {
+                scroll_to = drag.constraint.width/2;
+            } else if (scroll_to < drag.constraint.right) {
+                scroll_to = drag.constraint.right;
+            }
+            
+            //$(this.timenav).stop();
+            //$(this.timenav).animate({"left": scroll_to}, config.duration/2, "linear");
+            $(timenav).css("left", scroll_to); 
         }
     }
 

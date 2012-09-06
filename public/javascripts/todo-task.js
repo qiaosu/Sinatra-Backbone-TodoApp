@@ -53,6 +53,7 @@ window.TasksView = Backbone.View.extend({
 		this.model.fetch({
 			'success': function(res, status, xhr){
 				_self.renderAllTask(res, status, xhr);
+				window.events.trigger('TIMELINEINIT', window.STATICS.currentList, status);
 			},
 			'error': _self.error
 		});

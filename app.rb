@@ -53,6 +53,8 @@ class List
   include DataMapper::Resource
   property :id,           Serial
   property :name,         String, :required => true
+  property :created_at,   DateTime
+  property :closed_at,    DateTime
   has n, :tasks, :constraint => :destroy
 end
 
