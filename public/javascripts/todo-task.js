@@ -32,7 +32,7 @@ window.TasksView = Backbone.View.extend({
 		'click .J_taskActive': 'taskUpdate',
 		'click #J_addTask': 'mainBtnSubmit',
 		'click .J_taskDelete': 'taskDestroy',
-		'keyup #J_inputTask': 'checkAutoSubmit',
+		'keypress #J_inputTask': 'checkAutoSubmit',
 		'click .J_taskAnnotate': 'toggleAnnotations',
 		'click .J_annoteSubmit': 'annoteCreate'
 	},
