@@ -100,7 +100,7 @@ window.TasksView = Backbone.View.extend({
 	 * 键盘触发任务提交 
 	 */
 	checkAutoSubmit: function(e){
-		if (e.keyCode != window.STATICS.keysMap['ENTER']){ return false; }
+		if (e.keyCode != window.STATICS.keysMap['ENTER']){ return; }
 		if ($('#J_inputTask').val() == ""){ return false; }
 		var _name = $('#J_inputTask').attr('value'),
 			_actionUrl = '/'+ window.STATICS.currentList,
