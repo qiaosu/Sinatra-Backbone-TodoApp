@@ -25,13 +25,4 @@
                 = " | "
                 %a{:href => "/signup"} register
     = yield
-    %script{:src => "/javascripts/jquery-latest.js"}
-    %script{:src => "/javascripts/underscore.js"}
-    %script{:src => "/javascripts/backbone.js"}
-    %script{:src => "/javascripts/todo-app.js"}
-    - if current_user
-      %script{:src => "/javascripts/todo-task.js"}
-      %script{:src => "/javascripts/jquery.easing.1.3.js"}
-      %script{:src => "/javascripts/dateFormat.js"}
-      %script{:src => "/javascripts/mod_drag.js"}
-      %script{:src => "/javascripts/timeline.js"}
+    = javascripts

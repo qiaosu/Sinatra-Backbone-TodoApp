@@ -50,6 +50,7 @@ window.TasksView = Backbone.View.extend({
 		var _self = this;
 		this.model = new window.TasksCollection();
 		this.model.url = this.model.url + '/' + window.STATICS.currentList;
+		this.showLoading();
 		this.model.fetch({
 			'success': function(res, status, xhr){
 				_self.renderAllTask(res, status, xhr);
@@ -148,6 +149,7 @@ window.TasksView = Backbone.View.extend({
 	renderAllTask: function(res, status, xhr){
 		var _dom = "", _target = $(this.el).find('ul.tasks');
 		_target.empty();
+		this.hideLoading();
 		for (var i in status){
 			_dom = $(this.getTemplate(status[i], this.taskTemplate));
 			_dom.attr('id', status[i].id);
@@ -284,6 +286,12 @@ window.TasksView = Backbone.View.extend({
 			},
 			error: _self.error
 		});
+	},
+	showLoading: function(){
+		$('#J_loading').show();
+	},
+	hideLoading: function(){
+		$('#J_loading').fadeOut();
 	},
 	/** 
 	 * 获得task的dom模板 
