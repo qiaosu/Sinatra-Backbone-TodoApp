@@ -5,6 +5,9 @@
     %button.close{:type => "button", :data => {:dismiss => "alert"}} ×
     %strong Warning!
   - if current_user
+    #J_loading.alert.alert-info.fn-hide
+      %strong Loading!
+      Hey, loading data now, just wait a few seconds.
     .row
       .span3
         .well.sidebar-nav
@@ -50,8 +53,13 @@
     = haml :template
     #md-editor-container.fn-hide
       .md-editor
-        %textarea{:name => "annotation"}
-        %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
+        %textarea.md-editor-area{:name => "annotation"}
+        .md-editor-footer
+          %p 
+            You can use 
+            %code markdown 
+            tag language here.
+          %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
     .row
       .span12
         %h4 Project's Timeline

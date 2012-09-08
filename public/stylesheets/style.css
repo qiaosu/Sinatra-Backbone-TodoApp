@@ -198,10 +198,46 @@ li.task .actions {
   margin: 0 0 10px;
 }
 
-.md-editor textarea {
-  width: 70%;
-  height: 120px;
+.md-editor {
+  width: 600px;
 }
+
+.md-editor textarea {
+  width: 590px;
+  height: 120px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  max-width: 590px;
+}
+
+.md-editor-footer {
+  position: relative;
+  border: solid 1px #ccc;
+  border-top: 0 none;
+  background: #fcfcfc;
+}
+
+.md-editor-footer p {
+  padding: 6px 10px;
+  margin-bottom: 0;
+  color: #999;
+}
+
+.md-editor-footer input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 22px;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  border-top: 0 none;
+  border-right: 0 none;
+  border-bottom: 0 none;
+}
+
 
 #timeline-container{
   overflow: hidden;
