@@ -111,8 +111,8 @@ window.AppView = Backbone.View.extend({
 					width: 1170
 				},
 				date: {
-					start_date: (new Date(start).valueOf() - 1000 * 3600 * 24 * 10),
-					end_date: (new Date().valueOf() + 1000 * 3600 * 24 * 10)
+					start_date: (new Date(start).valueOf() - 1000 * 3600 * 24 * 20),
+					end_date: (new Date().valueOf() + 1000 * 3600 * 24 * 20)
 				},
 				interval: {
 					unit: 'day',

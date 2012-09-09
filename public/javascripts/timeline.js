@@ -1,13 +1,18 @@
 window.TimelineView = Backbone.View.extend({
 	el: $('#timeline-container'),
-	events: {},
-	markerTemplate: _.template('<div class="marker"><div class="flag"><div class="flag-content"><div class="thumbnail thumb-youtube"></div><h3><%= name %></h3></div></div><div class="dot"></div><div class="line"><div class="event-line"></div></div></div>'),
+	events: {
+		'mouseover .marker': 'markerShowHighlight',
+		'mouseout .marker': 'markerHideHighlight'
+	},
+	markerTemplate: _.template('<div class="marker"><div class="flag"><div class="flag-content"><div class="thumbnail thumb-plaintext"></div><h3><%= name %></h3></div></div><div class="dot"></div><div class="line"><div class="event-line"></div></div></div>'),
 	cacheMarkerArr: {},
 	initialize: function(config){
 		_.bindAll(this);
 		this.config = config;
 		this.config.nav.constraint.left = this.config.nav.constraint.width / 2;
 		this.config.nav.constraint.right = this.config.nav.constraint.left - Math.ceil((this.config.nav.date.end_date - this.config.nav.date.start_date)/1000/3600/24) * this.config.nav.interval.step
+
+		this.subscribe();
 
 		/**
 		 * 构建dom
@@ -21,6 +26,10 @@ window.TimelineView = Backbone.View.extend({
 		 */
 		this.drag = new _.Drag();
 		this.drag.createPanel('#timeline-container .navigation', this.timenav, this.config.nav.constraint, false);
+	},
+	subscribe: function(){
+		window.events.on('MARKERCREATE', this.createSingleMarker, this);
+		window.events.on('MARKERREMOVE', this.removeMarker, this);
 	},
 	appendAndGetElement: function(append_to_element, tag, cName, content) {
 		var e,
@@ -140,6 +149,23 @@ window.TimelineView = Backbone.View.extend({
 		$('.flag', dom).css({
 			'top': (this.cacheMarkerArr[markerDate]-1)%3*50
 		})
+	},
+	removeMarker: function(data){
+		var id = '#task_'+data.id;
+		//$(id, this.timenav).remove();
+
+		//todo: 删除cacheMarkerArr
+		console.log(data);
+	},
+	markerShowHighlight: function(e){
+		var target = $(e.target).parents('.flag');
+		target.addClass('zFront');
+		target.parent().addClass('active');
+	},
+	markerHideHighlight: function(e){
+		var target = $(e.target).parents('.flag');
+		target.removeClass('zFront');
+		target.parent().removeClass('active');
 	},
 	getTemplate: function(data, type){
 		return type(data);

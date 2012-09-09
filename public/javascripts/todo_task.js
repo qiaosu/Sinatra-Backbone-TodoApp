@@ -77,8 +77,8 @@ window.TasksView = Backbone.View.extend({
           		xhr.setRequestHeader('X-HTTP-Method-Override', 'PUT');
         	},
 			success: function(res, status, xhr){
-				_model.fetch();
 				_self.renderTask(res, status, xhr);
+				_model.fetch();
 			},
 			error: _self.error
 		});
@@ -140,6 +140,9 @@ window.TasksView = Backbone.View.extend({
 		var _dom = $(this.getTemplate(res, this.taskTemplate));
 		if (res.completed_at) {
 			_dom.find('span.task-content').addClass('completed');
+			window.events.trigger('MARKERCREATE', res);
+		} else {
+			window.events.trigger('MARKERREMOVE', res);
 		}
 		$(this.el).find('#'+_id).html(_dom.children());
 	},
@@ -202,6 +205,9 @@ window.TasksView = Backbone.View.extend({
 		this.model.remove(this.model.get(_id));
 		_target.remove();
 	},
+	/** 
+	 * 批注部分, 需增加对应的model. 
+	 */
 	/**
 	 * 显示批注
 	 */
