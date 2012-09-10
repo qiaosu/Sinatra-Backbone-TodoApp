@@ -160,12 +160,10 @@ window.TimelineView = Backbone.View.extend({
 	markerShowHighlight: function(e){
 		var target = $(e.target).parents('.flag');
 		target.addClass('zFront');
-		target.parent().addClass('active');
 	},
 	markerHideHighlight: function(e){
 		var target = $(e.target).parents('.flag');
 		target.removeClass('zFront');
-		target.parent().removeClass('active');
 	},
 	getTemplate: function(data, type){
 		return type(data);

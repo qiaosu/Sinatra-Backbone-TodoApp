@@ -9,6 +9,7 @@ require 'dm-sqlite-adapter'
 require 'securerandom'
 require 'bcrypt'
 require 'glorify'
+require 'digest/md5'
 
 enable :sessions
 

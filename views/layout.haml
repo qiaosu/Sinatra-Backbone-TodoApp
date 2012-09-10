@@ -16,6 +16,8 @@
           .welcomebar.fn-right
             - if current_user
               %p 
+                %span
+                  %img.avatar{:height => "20", :width => "20", :src => "#{get_gravatar}"}
                 Logged in as #{current_user.email}
                 = " | "
                 %a{:href => "/logout"} logout

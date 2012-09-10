@@ -102,4 +102,19 @@ helpers do
     @js = args
   end
 
+  # string2md5 
+  class String
+    def to_md5
+      Digest::MD5.hexdigest(self)
+    end
+  end
+
+  def get_gravatar
+    gravatar = []
+    gravatar << "https://secure.gravatar.com/avatar/"
+    gravatar << current_user.email.to_md5
+    gravatar << "?s=140&d=http://todo.decimage.com/img/gravatar-user-420.png"
+    gravatar.join
+  end
+
 end
