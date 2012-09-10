@@ -103,6 +103,13 @@ delete '/list/:id' do
   redirect to('/')
 end
 
+put '/list/:id' do
+  list = List.get(params[:id])
+  list.update(:name => params['list']['name'])
+  list.save
+  redirect to('/')
+end
+
 get '/annotation/:id' do
   annotations = Task.get(params[:id]).annotations unless Task.get(params[:id]).nil?
   annotations.each do |annote|

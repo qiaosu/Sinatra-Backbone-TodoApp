@@ -33,6 +33,15 @@ form.delete input{
   border-top:solid 5px #ccc;
 }
 
+.list-admin .alert {
+  margin-top: 12px;
+  padding-right: 14px;
+}
+
+.list-admin .alert form {
+  margin: 0;
+}
+
 .container .row {
   margin-bottom: 20px;
 }
@@ -223,6 +232,7 @@ li.task .actions {
   padding: 6px 10px;
   margin-bottom: 0;
   color: #999;
+  font-size: 11px;
 }
 
 .md-editor-footer input {

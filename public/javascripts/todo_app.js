@@ -16,8 +16,12 @@ window.AppView = Backbone.View.extend({
 	el: $('#J_app'),
 	t: null,
 	events: {
-		'click #J_listEdit': 'listEdit',
-		'click .J_listRemove': 'listDestroy',
+		'click #J_listRenameCancel': 'listRenameHide',
+		'click #J_listRenamePrepare': 'listRenameShow',
+		'click #J_listRenameBtn': 'listUpdate',
+		'click #J_listDeleteCancel': 'listDeleteHide',
+		'click #J_listDeletePrepare': 'listDeleteShow',
+		'click #J_listDeleteBtn': 'listDestroy',
 		'click .sidebar-nav .nav-list a': 'listSelect',
 		'click #J_globalAlert .close': 'closeGlobalNotice'
 	},
@@ -39,31 +43,61 @@ window.AppView = Backbone.View.extend({
 			this.initGlobalNotice(_notice);
 		}
 	},
-	/** 
-	 * 进入/退出list编辑状态 
+	/**
+	 * 隐藏重命名面板
 	 */
-	listEdit: function(e){
-		var _stat = $(e.target).attr('data-state');
-		if (_stat === 'hide') {
-			$('.sidebar-nav .nav-list i').removeClass('fn-hide');
-			$(e.target).attr('data-state','show');
-			$(e.target).text('back');
-		}
-		if (_stat === 'show') {
-			$('.sidebar-nav .nav-list i').addClass('fn-hide');
-			$(e.target).attr('data-state','hide');
-			$(e.target).text('edit');
-		}
+	listRenameHide: function(e){
+		$('#J_listRename', '.list-admin').addClass('fn-hide');
+		e.preventDefault();
+		e.stopPropagation();
+	},
+	/**
+	 * 展示重命名面板
+	 */
+	listRenameShow: function(e){
+		$('.alert', '.list-admin').addClass('fn-hide');
+		$('#J_listRename', '.list-admin').removeClass('fn-hide');
+		e.preventDefault();
+		e.stopPropagation();
+	},
+	/**
+	 * 隐藏删除面板
+	 */
+	listDeleteHide: function(e){
+		$('#J_listDestroy', '.list-admin').addClass('fn-hide');
+		e.preventDefault();
+		e.stopPropagation();
+	},
+	/**
+	 * 展示删除面板
+	 */
+	listDeleteShow: function(e){
+		$('.alert', '.list-admin').addClass('fn-hide');
+		$('#J_listDestroy', '.list-admin').removeClass('fn-hide');
+		e.preventDefault();
+		e.stopPropagation();
+	},
+	/**
+	 * 更新list名称
+	 */
+	listUpdate: function(e){
+		var _target = $(e.target),
+			_id = window.STATICS.currentList,
+			_actionUrl = '/list/'+_id;
+		$('#J_listRenameForm').attr('action',_actionUrl);
+		$('#J_listRenameForm')[0].submit();
+		e.preventDefault();
+		e.stopPropagation();
 	},
 	/** 
 	 * 销毁list 
 	 */
 	listDestroy: function(e){
 		var _target = $(e.target),
-			_id = _target.parents('.nav-item').attr('data-id'),
+			_id = window.STATICS.currentList,
 			_actionUrl = '/list/'+_id;
-		$('#J_listDestroy').attr('action',_actionUrl);
-		$('#J_listDestroy')[0].submit();
+		$('#J_listDestroyForm').attr('action',_actionUrl);
+		$('#J_listDestroyForm')[0].submit();
 		e.preventDefault();
 		e.stopPropagation();
 	},
@@ -72,6 +106,7 @@ window.AppView = Backbone.View.extend({
 	 */
 	listSelect: function(e){
 		var _target = $(e.target),
+			_text = $(_target).text().trim(),
 			_id = _target.parents('.nav-item').attr('data-id');
 		if (_id != window.STATICS.currentList) {
 			window.STATICS.currentList = _id;
@@ -80,7 +115,17 @@ window.AppView = Backbone.View.extend({
 			 */
 			window.tasksView.undelegateEvents();
 			window.tasksView = new window.TasksView();
+
 			_target.parents('.nav-item').addClass('active').siblings().removeClass('active');
+
+			$('#J_currentAdminList').text(_text);
+			$('input[name*="list"]' ,'#J_listRenameForm').attr('value', _text);
+
+			$('.alert', '.list-admin').each(function(i,item){
+				if (!$(item).hasClass('fn-hide')) {
+					$(item).addClass('fn-hide');
+				}
+			})
 		}
 		e.preventDefault();
 		e.stopPropagation();

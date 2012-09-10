@@ -240,7 +240,10 @@ window.TasksView = Backbone.View.extend({
 	 */
 	getAnnotations: function(id){
 		var url = '/annotation/'+id, 
+			root = $(this.el).find('#'+id).find('.annotations'),
 			_self = this;
+		root.children().remove();
+		$(root).append('<div class="loading">批注加载中...</div>');
 		$.ajax({
 			url: url,
 			type: 'GET',
@@ -252,7 +255,7 @@ window.TasksView = Backbone.View.extend({
 	},
 	renderAnnotations: function(id, data){
 		var root = $(this.el).find('#'+id).find('.annotations');
-		root.children().remove();
+		$(root).find('.loading').remove();
 		if (data.length>0){
 			_.each(data, function(item){
 				root.append('<div class="annotation md-show">'+item.content+'</div>');
