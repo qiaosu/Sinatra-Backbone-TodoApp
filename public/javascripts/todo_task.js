@@ -32,7 +32,7 @@ window.TasksView = Backbone.View.extend({
 		'click .J_taskActive': 'taskUpdate',
 		'click #J_addTask': 'mainBtnSubmit',
 		'click .J_taskDelete': 'taskDestroy',
-		'keyup #J_inputTask': 'checkAutoSubmit',
+		'keypress #J_inputTask': 'checkAutoSubmit',
 		'click .J_taskAnnotate': 'toggleAnnotations',
 		'click .J_annoteSubmit': 'annoteCreate'
 	},
@@ -50,9 +50,11 @@ window.TasksView = Backbone.View.extend({
 		var _self = this;
 		this.model = new window.TasksCollection();
 		this.model.url = this.model.url + '/' + window.STATICS.currentList;
+		this.showLoading();
 		this.model.fetch({
 			'success': function(res, status, xhr){
 				_self.renderAllTask(res, status, xhr);
+				window.events.trigger('TIMELINEINIT', window.STATICS.currentList, status);
 			},
 			'error': _self.error
 		});
@@ -75,8 +77,8 @@ window.TasksView = Backbone.View.extend({
           		xhr.setRequestHeader('X-HTTP-Method-Override', 'PUT');
         	},
 			success: function(res, status, xhr){
-				_model.fetch();
 				_self.renderTask(res, status, xhr);
+				_model.fetch();
 			},
 			error: _self.error
 		});
@@ -99,7 +101,7 @@ window.TasksView = Backbone.View.extend({
 	 * 键盘触发任务提交 
 	 */
 	checkAutoSubmit: function(e){
-		if (e.keyCode != window.STATICS.keysMap['ENTER']){ return false; }
+		if (e.keyCode != window.STATICS.keysMap['ENTER']){ return; }
 		if ($('#J_inputTask').val() == ""){ return false; }
 		var _name = $('#J_inputTask').attr('value'),
 			_actionUrl = '/'+ window.STATICS.currentList,
@@ -138,6 +140,9 @@ window.TasksView = Backbone.View.extend({
 		var _dom = $(this.getTemplate(res, this.taskTemplate));
 		if (res.completed_at) {
 			_dom.find('span.task-content').addClass('completed');
+			window.events.trigger('MARKERCREATE', res);
+		} else {
+			window.events.trigger('MARKERREMOVE', res);
 		}
 		$(this.el).find('#'+_id).html(_dom.children());
 	},
@@ -147,6 +152,7 @@ window.TasksView = Backbone.View.extend({
 	renderAllTask: function(res, status, xhr){
 		var _dom = "", _target = $(this.el).find('ul.tasks');
 		_target.empty();
+		this.hideLoading();
 		for (var i in status){
 			_dom = $(this.getTemplate(status[i], this.taskTemplate));
 			_dom.attr('id', status[i].id);
@@ -189,6 +195,7 @@ window.TasksView = Backbone.View.extend({
 			},
 			error: _self.error
 		});
+		e.preventDefault();
 	},
 	/** 
 	 * 在collection中移除任务, 并移除对应dom 
@@ -196,9 +203,13 @@ window.TasksView = Backbone.View.extend({
 	removeTask: function(res, status, xhr){
 		var _id = res;
 		var _target = $(this.el).find('li#'+_id);
+		window.events.trigger('MARKERREMOVE', res);
 		this.model.remove(this.model.get(_id));
 		_target.remove();
 	},
+	/** 
+	 * 批注部分, 需增加对应的model. 
+	 */
 	/**
 	 * 显示批注
 	 */
@@ -231,7 +242,10 @@ window.TasksView = Backbone.View.extend({
 	 */
 	getAnnotations: function(id){
 		var url = '/annotation/'+id, 
+			root = $(this.el).find('#'+id).find('.annotations'),
 			_self = this;
+		root.children().remove();
+		$(root).append('<div class="loading">批注加载中...</div>');
 		$.ajax({
 			url: url,
 			type: 'GET',
@@ -243,7 +257,7 @@ window.TasksView = Backbone.View.extend({
 	},
 	renderAnnotations: function(id, data){
 		var root = $(this.el).find('#'+id).find('.annotations');
-		root.children().remove();
+		$(root).find('.loading').remove();
 		if (data.length>0){
 			_.each(data, function(item){
 				root.append('<div class="annotation md-show">'+item.content+'</div>');
@@ -283,6 +297,12 @@ window.TasksView = Backbone.View.extend({
 			},
 			error: _self.error
 		});
+	},
+	showLoading: function(){
+		$('#J_loading').show();
+	},
+	hideLoading: function(){
+		$('#J_loading').fadeOut();
 	},
 	/** 
 	 * 获得task的dom模板 
