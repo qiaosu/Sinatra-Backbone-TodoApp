@@ -114,6 +114,7 @@ window.AppView = Backbone.View.extend({
 			 * 清除tasksView的事件代理, 然后移除tasksView, 否则会有重复绑定问题. 
 			 */
 			window.tasksView.undelegateEvents();
+			window.timelineView.offAllSubscribes();
 			window.tasksView = new window.TasksView();
 
 			_target.parents('.nav-item').addClass('active').siblings().removeClass('active');

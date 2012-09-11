@@ -31,6 +31,10 @@ window.TimelineView = Backbone.View.extend({
 		window.events.on('MARKERCREATE', this.createSingleMarker, this);
 		window.events.on('MARKERREMOVE', this.removeMarker, this);
 	},
+	offAllSubscribes: function(){
+		window.events.off('MARKERCREATE');
+		window.events.off('MARKERREMOVE');
+	},
 	appendAndGetElement: function(append_to_element, tag, cName, content) {
 		var e,
 			_tag		= "<div>",
@@ -175,7 +179,7 @@ window.TimelineView = Backbone.View.extend({
 			return 'overflow';
 		}
 		for (i = base; i < len; i++) {
-			for (m; m<tmp_arr.length; m++) {
+			for (m=0; m<tmp_arr.length; m++) {
 				if (cache_arr[i] == tmp_arr[m]){
 					tmp_arr.splice(m, 1);
 				}
