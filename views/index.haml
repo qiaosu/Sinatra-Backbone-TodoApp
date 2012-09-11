@@ -5,30 +5,24 @@
     %button.close{:type => "button", :data => {:dismiss => "alert"}} ×
     %strong Warning!
   - if current_user
+    #J_loading.alert.alert-info.fn-hide
+      %strong Loading!
+      Hey, loading data now, just wait a few seconds.
     .row
       .span3
         .well.sidebar-nav
           %h4 
             My projects:
-            %span.more
-              (
-              %a#J_listEdit{:href => "#", :data => {:state => "hide"}} edit
-              )
           %ul.nav.nav-list
             - @lists.each do |list|
               - if @lists.index(list) == 0
-                %li.active.nav-item.clearfix{:data => {:id => "#{list.id}"}}
+                %li.active.nav-item.clearfix{:data => {:id => "#{list.id}", :create => "#{list.created_at}", :close => "#{list.closed_at}"}}
                   %a{:href => "#"} 
                     = list.name
-                    %i.J_listRemove.icon-remove.fn-hide
               - else 
-                %li.nav-item.clearfix{:data => {:id => "#{list.id}"}}
+                %li.nav-item.clearfix{:data => {:id => "#{list.id}", :create => "#{list.created_at}", :close => "#{list.closed_at}"}}
                   %a{:href => "#"} 
                     = list.name
-                    %i.J_listRemove.icon-remove.fn-hide
-          %form#J_listDestroy.list-destroy{:action => "#", :method => "POST"}
-            %input{:type => "hidden", :name => "_method", :value => "DELETE"}
-            %input{:type => "submit", :value => "×"}
           .add-list
             %form.new{:action => "/new/list", :method => "POST"}
               .controls
@@ -37,6 +31,34 @@
                 .input-append
                   %input.span2{:type=>"text", :name=>"list[name]"}<
                     %input.btn{:type=>"submit", :value=>"+ List"}
+          %hr
+          .list-admin
+            %h4 Projects admin:
+            %p
+              \-
+              %span#J_currentAdminList
+                = @lists.first.name
+            .btn-group
+              %button#J_listRenamePrepare.btn rename
+              %button#J_listDeletePrepare.btn delete
+            .alert.alert-error.fn-hide#J_listDestroy
+              %form#J_listDestroyForm{:action => "#", :method => "POST"}
+                %input{:type => "hidden", :name => "_method", :value => "DELETE"}
+                %h4.alert-heading Are you ABSOLUTELY sure?
+                %p This action CANNOT be undone. This will delete the whole project, include all tasks, annotations.
+                %p
+                  %button#J_listDeleteBtn.btn.btn-danger{:type => "sbumit"} Delete anyway
+                  %a#J_listDeleteCancel.btn{:href => "#"} Or cancel
+            .alert.alert-info.fn-hide#J_listRename
+              %form.rename#J_listRenameForm{:action => "#", :method => "POST"}
+                %input{:type => "hidden", :name => "_method", :value => "PUT"}
+                %h4.alert-heading Rename current project?
+                .controls
+                  %input.span2{:type => "text", :name => "list[name]", :value => "#{@lists.first.name}"}
+                .controls
+                  %p
+                    %button#J_listRenameBtn.btn.btn-primary{:type => "sbumit"} Rename
+                    %a#J_listRenameCancel.btn{:href => "#"} Or cancel
       .span9
         #J_lists.row
           - if @lists.count > 0
@@ -45,12 +67,22 @@
                 .input-append
                   %input#J_inputTask.span7.input-task{:type => "text", :name => "task[name]", :maxLength => "100"}<
                     %input#J_addTask.btn.btn-large.btn-primary.btn-main{:type => "button", :value => "New Task >>"}/
-            %ul.tasks
+            .tasks-container
+              %ul.tasks
     = haml :template
     #md-editor-container.fn-hide
       .md-editor
-        %textarea{:name => "annotation"}
-        %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
+        %textarea.md-editor-area{:name => "annotation"}
+        .md-editor-footer
+          %p 
+            You can use 
+            %code markdown 
+            tag language here.
+          %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
+    .row
+      .span12
+        %h4 Project's Timeline
+        #timeline-container
   %hr
   %footer
     %p 
