@@ -134,28 +134,79 @@ window.TimelineView = Backbone.View.extend({
 		}
 	},
 	createSingleMarker: function(data){
-		var dom = this.getTemplate(data, this.markerTemplate), dateInterval, pos={}, markerDate = new Date(data.completed_at).format('isoDate');
+		var dom = this.getTemplate(data, this.markerTemplate), dateInterval, pos={}, markerDate = new Date(data.completed_at).format('isoDate'), t=0;
 		dom = $(dom).appendTo($('.content', this.el));
 		$(dom).attr('id', 'task_'+data.id);
 		$('.thumbnail', dom).attr('id', 'thumbnail_'+data.id);
 
-		this.cacheMarkerArr[markerDate] = this.cacheMarkerArr[markerDate] ? this.cacheMarkerArr[markerDate]+1 : 1;
+		//this.cacheMarkerArr[markerDate] = this.cacheMarkerArr[markerDate] ? this.cacheMarkerArr[markerDate]+1 : 1;
+		if (!this.cacheMarkerArr[markerDate]){
+			this.cacheMarkerArr[markerDate] = [];
+		}
+		t = this.cacheCalculate(this.cacheMarkerArr[markerDate]);
+		if (t=='overflow') {return false;}
+		this.cacheMarkerArr[markerDate].push(t);
+		this.cacheMarkerArr[markerDate].sort();
+		
+		$(dom).attr('data-marker', t);
 
 		dateInterval = Math.round((new Date(data.completed_at).valueOf() - this.config.nav.date.start_date)/1000/3600/24);
-		pos.left = dateInterval * this.config.nav.interval.step + (Math.floor((this.cacheMarkerArr[markerDate]-1)/3))*10;
+		pos.left = dateInterval * this.config.nav.interval.step + (Math.floor(t/3))*10;
 		$(dom).css({
 			'left': pos.left
 		});
 		$('.flag', dom).css({
-			'top': (this.cacheMarkerArr[markerDate]-1)%3*50
+			'top': (t)%3*50
 		})
 	},
+	cacheCalculate: function(cache_arr){
+		cache_arr = cache_arr.sort();
+		var len = cache_arr.length, base = 0, tmp_arr = [], target = "", i = 0, m = 0;
+		if (0 <= len && len < 3) {
+			base = 0;
+			tmp_arr = [0, 1, 2];
+		} else if (3 <= len && len < 6) {
+			base = 3;
+			tmp_arr = [3, 4, 5];
+		} else if (6 <= len && len < 9) {
+			base = 6;
+			tmp_arr = [6, 7, 8];
+		} else {
+			return 'overflow';
+		}
+		for (i = base; i < len; i++) {
+			for (m; m<tmp_arr.length; m++) {
+				if (cache_arr[i] == tmp_arr[m]){
+					tmp_arr.splice(m, 1);
+				}
+			}
+		}
+		target = tmp_arr[Math.floor(Math.random()*tmp_arr.length)];
+		return target;
+	},
 	removeMarker: function(data){
-		var id = '#task_'+data.id;
-		//$(id, this.timenav).remove();
+		var id = '#task_'+ (data.id || data),
+			dom = $(id, this.timenav),
+			cache,
+			date, _self = this;
+		
+		if (!dom.length) { return false; }
+		cache = $(dom).attr('data-marker');
+		/**
+		 * 删除cacheMarkerArr
+		 */
+		date = this.config.nav.date.start_date + Math.floor(parseInt(dom[0].style.left)/30)*24*3600*1000;
+		date = new Date(date).format('isoDate');
+		$.each(this.cacheMarkerArr[date], function(i, item){
+			if (cache == item) {
+				_self.cacheMarkerArr[date].splice(i,1);
+			}
+		})
 
-		//todo: 删除cacheMarkerArr
-		console.log(data);
+		/**
+		 * 删除marker
+		 */
+		$(dom).remove();
 	},
 	markerShowHighlight: function(e){
 		var target = $(e.target).parents('.flag');

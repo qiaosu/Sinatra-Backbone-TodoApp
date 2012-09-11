@@ -195,6 +195,7 @@ window.TasksView = Backbone.View.extend({
 			},
 			error: _self.error
 		});
+		e.preventDefault();
 	},
 	/** 
 	 * 在collection中移除任务, 并移除对应dom 
@@ -202,6 +203,7 @@ window.TasksView = Backbone.View.extend({
 	removeTask: function(res, status, xhr){
 		var _id = res;
 		var _target = $(this.el).find('li#'+_id);
+		window.events.trigger('MARKERREMOVE', res);
 		this.model.remove(this.model.get(_id));
 		_target.remove();
 	},
