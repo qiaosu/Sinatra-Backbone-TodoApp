@@ -7,7 +7,8 @@ Create & admin projects, add tasks and every task can have some annotations.
 You can organize archived tasks in timeline panel.
 
 <br>
-Online Demo: [link](http://todo.decimage.com)<br>
+Online Demo: [http://todo.decimage.com](http://todo.decimage.com)<br>
+<br>
 Test Account<br>
 Email: test@gmail.com<br>
 Psd: 111111<br>
