@@ -148,6 +148,7 @@ window.AppView = Backbone.View.extend({
 
 		start = $('.nav-list li[data-id="'+listId+'"]', this.el).attr('data-create');
 		
+		if (!$('#timeline-container').length){return false;}
 		/**
 		 * init timeline
 		 */
