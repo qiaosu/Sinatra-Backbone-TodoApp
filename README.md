@@ -1,19 +1,26 @@
 Sinatra-Backbone-TodoApp
 ========================
 
-Omniauth, Project, Task | Backbone, Bootstrap, Sinatra, DataMapper, Sqlite3...
-Online Demo: [http://todo.decimage.com]
+Backbone, Bootstrap, Sinatra, DataMapper, Sqlite3...
 
-###New in 8.24
+Create & admin projects, add tasks and every task can have some annotations.
+You can organize archived tasks in timeline panel.
 
-add Annotation feature.
+Online Demo: [link](http://todo.decimage.com)
+Test Account
+Email: test@gmail.com
+Psd: 111111
+
+###New in 9.12
+
+add Timeline feature.
 
 ###Features:
 
 + RESTful
-+ front-end MVC
++ Front-end MVC
++ Built-in MarkDown Support
 + Omniauth
-+ MarkDown Support
 
 ###Install:
 
@@ -22,6 +29,5 @@ add Annotation feature.
 
 ###Browser Support
 
-I recommand you to use Chrome, which is the only browser I have tested.
-Other browsers may work well, but i'm not quite sure.
+Chrome is recommanded.
 
