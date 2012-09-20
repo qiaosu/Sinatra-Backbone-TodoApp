@@ -176,6 +176,10 @@ window.AppView = Backbone.View.extend({
 				result.push(data[item]);
 			}
 		}
+		/**
+		 * sort
+		 */
+		result = _.sortBy(result, function(item){ return new Date(item['completed_at'])})
 		return result;
 	}
 })
