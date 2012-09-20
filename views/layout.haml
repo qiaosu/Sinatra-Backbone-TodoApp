@@ -9,22 +9,6 @@
     /[if lt IE 9]
       %script{:src => "http://html5shiv.googlecode.com/svn/trunk/html5.js"}
   %body
-    .navbar.navbar-fixed-top
-      .navbar-inner
-        .container.clearfix
-          %a.brand{:href => "#"} To-do App
-          .welcomebar.fn-right
-            - if current_user
-              %p 
-                %span
-                  %img.avatar{:height => "20", :width => "20", :src => "#{get_gravatar}"}
-                Logged in as #{current_user.email}
-                = " | "
-                %a{:href => "/logout"} logout
-            - else
-              %p
-                %a{:href => "/login"} login
-                = " | "
-                %a{:href => "/signup"} register
+    .navbar     
     = yield
     = javascripts

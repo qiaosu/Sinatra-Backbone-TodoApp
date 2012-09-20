@@ -94,29 +94,31 @@ form.delete input{
 /*********** layout ***********/
 body {
   padding: 70px 0 40px;
+  background: #EAEAEA url('../img/bg.png');
 }
 
-.navbar-fixed-top .brand {
+a.brand {
   font-weight: 300;
   color: white;
   text-shadow: 0 1px 0 rgba(0, 0, 0, .1), 0 0 30px rgba(0, 0, 0, .125);
   -webkit-transition: all .2s linear;
   -moz-transition: all .2s linear;
   transition: all .2s linear;
-}
-
-.welcomebar {
-  float:right;
-  padding:11px 0;
-  line-height: 18px;
-  height: 18px;
+  display: block;
+  padding: 8px 20px 12px;
+  margin-left: -20px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 1;
+  color: #999;
 }
 
 .avatar {
   margin-top: -3px;
   margin-right: 3px;
   vertical-align: middle;
-  border: 1px solid #666;
+  border: 1px solid #ccc;
 }
 
 .sidebar-nav h4 {
