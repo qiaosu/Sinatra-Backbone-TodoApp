@@ -59,6 +59,12 @@ form.delete input{
   display: none;
 }
 
+/*********** 覆盖bootstrap *****/
+hr {
+  border-top: solid 1px #bbb;
+  border-bottom: solid 1px #eee;
+}
+
 /*********** webkit ***********/
 ::-webkit-scrollbar {
   height: 16px;
@@ -101,20 +107,22 @@ body {
 }
 
 a.brand {
-  font-weight: 300;
-  color: white;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, .1), 0 0 30px rgba(0, 0, 0, .125);
-  -webkit-transition: all .2s linear;
-  -moz-transition: all .2s linear;
-  transition: all .2s linear;
+  font-weight: bold;
+  color: #B3B3B3;
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
   display: block;
   padding: 8px 20px 12px;
   margin-left: -20px;
   margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: 200;
+  font-size: 52px;
   line-height: 1;
-  color: #999;
+  text-align: right;
 }
 
 .avatar {

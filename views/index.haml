@@ -1,10 +1,11 @@
 #J_app
-  - if @lists.count > 0
-    .container
-      .row
-        .span12
-          %h4 Project's Timeline
-          #timeline-container
+  - if current_user 
+    - if @lists.count > 0
+      .container
+        .row
+          .span12
+            %h4 Project's Timeline
+            #timeline-container
   .container
     .global-notice.fn-hide
       = styled_flash
@@ -16,9 +17,9 @@
         %strong Loading!
         Hey, loading data now, just wait a few seconds.
       .row
-        .span3
+        .span4
           %a.brand{:href => "#"} Oak Hill
-          .well.sidebar-nav
+          .well.sidebar-nav.fn-hide
             %h4 
               My projects:
             %ul.nav.nav-list
@@ -68,7 +69,7 @@
                       %p
                         %button#J_listRenameBtn.btn.btn-primary{:type => "sbumit"} Rename
                         %a#J_listRenameCancel.btn{:href => "#"} Or cancel
-        .span9
+        .span7
           .row.welcomebar.fn-right
             - if current_user
               %p 
@@ -87,11 +88,15 @@
               .add-task
                 .controls
                   .input-append
-                    %input#J_inputTask.span7.input-task{:type => "text", :name => "task[name]", :maxLength => "100"}<
+                    %input#J_inputTask.span5.input-task{:type => "text", :name => "task[name]", :maxLength => "100"}<
                       %input#J_addTask.btn.btn-large.btn-primary.btn-main{:type => "button", :value => "New Task >>"}/
               .tasks-container
                 %ul.tasks
-      = haml :template
+          = haml :template
+          %hr
+            %footer
+              %p 
+                © Kenshin 2012 
       #md-editor-container.fn-hide
         .md-editor
           %textarea.md-editor-area{:name => "annotation"}
@@ -101,7 +106,3 @@
               %code markdown 
               tag language here.
             %input.J_annoteSubmit.btn{:type => "submit", :value => "submit"}
-    %hr
-    %footer
-      %p 
-        © Kenshin 2012 

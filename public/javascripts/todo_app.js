@@ -166,7 +166,8 @@ window.AppView = Backbone.View.extend({
 					step: 30
 				}
 			},
-			data: data
+			data: data,
+			row: 6
 		});
 	},
 	prepareTimelineData: function(data){

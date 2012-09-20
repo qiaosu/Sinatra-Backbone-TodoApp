@@ -119,6 +119,25 @@ window.TimelineView = Backbone.View.extend({
 		for (i; i<len; i=i+step){
 			this.createIntervalElement(i, 'day');
 		}
+
+		/** 
+		 * 高度
+		 */
+		$timebackground.css({
+			'height': this.config.row*50 
+		})
+		$timenavline.css({
+			'height': this.config.row*50 
+		})
+		$layout.css({
+			'height': (this.config.row+1)*50
+		})
+		$time.css({
+			'top': this.config.row*50
+		})
+		$timeintervalbackground.css({
+			'top': this.config.row*50 + 1
+		})
 	},
 	/**
 	 * 构建Interval的Dom元素
@@ -167,26 +186,39 @@ window.TimelineView = Backbone.View.extend({
 		$(dom).attr('data-marker', t);
 
 		dateInterval = Math.round((new Date(data.completed_at).valueOf() - this.config.nav.date.start_date)/1000/3600/24);
-		pos.left = dateInterval * this.config.nav.interval.step + (Math.floor(t/3))*10;
+		pos.left = dateInterval * this.config.nav.interval.step + (Math.floor(t/this.config.row))*10;
 		$(dom).css({
 			'left': pos.left
 		});
 		$('.flag', dom).css({
-			'top': (t)%3*50
+			'top': (t)%this.config.row*50
+		})
+		$('.dot', dom).css({
+			'top': this.config.row*50
+		})
+		$('.line', dom).css({
+			'height': this.config.row*50
 		})
 	},
 	cacheCalculate: function(cache_arr){
+		var s = parseInt(this.config.row,10);
 		cache_arr = cache_arr.sort();
 		var len = cache_arr.length, base = 0, tmp_arr = [], target = "", i = 0, m = 0;
-		if (0 <= len && len < 3) {
+		if (0 <= len && len < s) {
 			base = 0;
-			tmp_arr = [0, 1, 2];
-		} else if (3 <= len && len < 6) {
-			base = 3;
-			tmp_arr = [3, 4, 5];
-		} else if (6 <= len && len < 9) {
-			base = 6;
-			tmp_arr = [6, 7, 8];
+			for (var i = base;i<s;i++){
+				tmp_arr.push(i);
+			}
+		} else if (s <= len && len < (s*2)) {
+			base = s;
+			for (var i = base;i<(s*2);i++){
+				tmp_arr.push(i);
+			}
+		} else if ((s*2) <= len && len < (s*3)) {
+			base = s*2;
+			for (var i = base;i<(s*3);i++){
+				tmp_arr.push(i);
+			}
 		} else {
 			return 'overflow';
 		}
