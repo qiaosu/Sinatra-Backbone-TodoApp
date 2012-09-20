@@ -93,8 +93,11 @@ form.delete input{
 
 /*********** layout ***********/
 body {
-  padding: 70px 0 40px;
   background: #EAEAEA url('../img/bg.png');
+}
+
+.container {
+  padding: 100px 0;
 }
 
 a.brand {

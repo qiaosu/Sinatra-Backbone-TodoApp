@@ -86,10 +86,14 @@ delete '/task/:id' do
 end
 
 post '/new/list' do
-  list = List.new(params['list'])
-  list.user_id = current_user.id
-  list.save
-  redirect to('/')
+  if logged_in?
+    list = List.new(params['list'])
+    list.user_id = current_user.id
+    list.save
+    redirect to('/')
+  else 
+    redirect to('/login')
+  end
 end
 
 get '/list/:id' do
