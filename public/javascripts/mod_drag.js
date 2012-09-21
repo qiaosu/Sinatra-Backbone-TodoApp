@@ -239,6 +239,7 @@
             if (delta) {
                 if (e.preventDefault) {
                      e.preventDefault();
+                     e.stopPropagation();
                 }
                 e.returnValue = false;
             }

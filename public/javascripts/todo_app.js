@@ -169,6 +169,8 @@ window.AppView = Backbone.View.extend({
 			data: data,
 			row: 6
 		});
+
+		this.mCustomScrollbar();
 	},
 	prepareTimelineData: function(data){
 		var result = [];
@@ -182,6 +184,9 @@ window.AppView = Backbone.View.extend({
 		 */
 		result = _.sortBy(result, function(item){ return new Date(item['completed_at'])})
 		return result;
+	},
+	mCustomScrollbar: function(){
+		$("#J_app").mCustomScrollbar("vertical",1000,"easeOutExpo",0,"auto","yes","yes",10);
 	}
 })
 
