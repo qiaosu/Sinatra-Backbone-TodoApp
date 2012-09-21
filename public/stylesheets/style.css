@@ -65,6 +65,33 @@ hr {
   border-bottom: solid 1px #eee;
 }
 
+/*********** 增强 **************/
+
+.block-row {
+  margin-left: -20px;
+  min-height: 600px;
+  _height: 600px;
+  *zoom: 1;
+}
+
+.block-row::before, .block-row::after {
+  display: table;
+  content: "";
+}
+
+.block-row:after {
+  clear: both;
+}
+
+@media (min-width: 1200px) {
+  .block-row {
+    margin-left: -30px;
+    min-height: 600px;
+    _height: 600px;
+    *zoom: 1;
+  }
+}
+
 /*********** webkit ***********/
 ::-webkit-scrollbar {
   height: 16px;
@@ -97,13 +124,61 @@ hr {
   background: transparent;
 }
 
+/*********** scrollbar ********/
+#J_app .customScrollBox {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dragger_container {
+  position: fixed;
+  z-index: 99;
+  right: 8px;
+  top: 0;
+  width: 10px;
+  height: 100%;
+}
+
+.dragger_container .dragger {
+  position: relative;
+  width: 10px;
+  height: 60px;
+  background: #999;
+  text-align: center;
+  line-height: 60px;
+  color: #666;
+  overflow: hidden;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: 1px solid #999;
+}
+
 /*********** layout ***********/
-body {
+html, body {
   background: #EAEAEA url('../img/bg.png');
+  width: 100%;
+  height: 100%;
+}
+
+#J_app {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .container {
-  padding: 100px 0;
+  position: relative;
+  width: 100%;
+  top: 0;
+}
+
+.content {
+  width: 1170px;
+  margin: 0 auto;
 }
 
 a.brand {
@@ -268,6 +343,31 @@ li.task .actions {
   border-bottom: 0 none;
 }
 
+.timeline-box {
+  padding: 100px 0;
+}
+
+.timeline-box h4 {
+  position: relative;
+  top: 90px;
+  left: -150px;
+  font-weight: bold;
+  color: #B3B3B3;
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  text-rendering: optimizeLegibility;
+  display: inline-block;
+  font-size: 28px;
+  line-height: 1;
+}
 
 #timeline-container{
   overflow: hidden;
@@ -275,6 +375,7 @@ li.task .actions {
   padding: 0 !important;
   margin: 10px 0 0 !important;
   clear: both;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
 }
 
 .thumbnail{width:24px;height:24px;overflow:hidden;float:left;margin:0;margin-right:1px;margin-top:6px;border:0;padding:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
