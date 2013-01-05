@@ -160,7 +160,8 @@ window.TasksView = Backbone.View.extend({
 				_dom.find('span.task-content').addClass('completed');
 			}
 			_target.append(_dom);
-		}		
+		}
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	/** 
 	 * 在列表最后追加渲染一条task 
@@ -174,6 +175,7 @@ window.TasksView = Backbone.View.extend({
 		_dom.attr('id', _id);
 		_target.append(_dom);
 		$('#J_inputTask').attr('value',"");
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	/** 
 	 * 销毁任务
@@ -195,6 +197,7 @@ window.TasksView = Backbone.View.extend({
 			},
 			error: _self.error
 		});
+		window.events.trigger('SCROLLERRERENDER');
 		e.preventDefault();
 	},
 	/** 
@@ -206,6 +209,7 @@ window.TasksView = Backbone.View.extend({
 		window.events.trigger('MARKERREMOVE', res);
 		this.model.remove(this.model.get(_id));
 		_target.remove();
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	/** 
 	 * 批注部分, 需增加对应的model. 
@@ -216,12 +220,14 @@ window.TasksView = Backbone.View.extend({
 	showAnnotations: function(id){
 		$(this.el).find('.annotations').addClass('fn-hide');
 		$(this.el).find('#'+id).find('.annotations').removeClass('fn-hide');
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	/**
 	 * 隐藏批注
 	 */
 	hideAnnotations: function(id){
 		$(this.el).find('#'+id).find('.annotations').addClass('fn-hide');
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	/**
 	 * 切换批注显示隐藏
@@ -264,6 +270,7 @@ window.TasksView = Backbone.View.extend({
 			});
 		}
 		root.append($('#md-editor-container').html());
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	appendAnnotation: function(id, data){
 		var _root = $(this.el).find('#'+id),
@@ -276,6 +283,7 @@ window.TasksView = Backbone.View.extend({
 		index = index + 1;
 		_root.find('.J_taskAnnotate span').text(index);
 		_root.find('.md-editor textarea').attr('value', '');
+		window.events.trigger('SCROLLERRERENDER');
 	},
 	annoteCreate: function(e){
 		var _target = $(e.target),

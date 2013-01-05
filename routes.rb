@@ -1,6 +1,6 @@
 #routes
 get '/' do
-  js :jquery_latest, :jquery_ui, :underscore, :backbone, :jquery_easing, :jquery_customscrollbar, :date_format, :todo_app, :todo_task, :mod_drag, :timeline if logged_in?
+  js :jquery_latest, :jquery_ui, :underscore, :backbone, :jquery_easing, :jquery_mousewheel, :jquery_customscrollbar, :date_format, :todo_app, :todo_task, :mod_drag, :timeline if logged_in?
   if current_user
     @lists = current_user.lists.all(:order => [:name])
   end

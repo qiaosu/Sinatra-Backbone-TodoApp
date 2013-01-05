@@ -27,6 +27,7 @@ window.AppView = Backbone.View.extend({
 	},
 	suscribe: function(){
 		window.events.on('TIMELINEINIT', this.timelineInit, this);
+		window.events.on('SCROLLERRERENDER', this.updateScrollbar, this);
 	},
 	/** 
 	 * 初始化
@@ -170,7 +171,13 @@ window.AppView = Backbone.View.extend({
 			row: 6
 		});
 
-		this.mCustomScrollbar();
+		//this.mCustomScrollbar();
+		$("#J_app").mCustomScrollbar({
+			scrollButtons:{
+				enable:false
+			},
+			mouseWheelPixels:100
+		});
 	},
 	prepareTimelineData: function(data){
 		var result = [];
@@ -185,8 +192,8 @@ window.AppView = Backbone.View.extend({
 		result = _.sortBy(result, function(item){ return new Date(item['completed_at'])})
 		return result;
 	},
-	mCustomScrollbar: function(){
-		$("#J_app").mCustomScrollbar("vertical",1000,"easeOutExpo",0,"auto","yes","yes",10);
+	updateScrollbar: function(){
+		$("#J_app").mCustomScrollbar("update");
 	}
 })
 

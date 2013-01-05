@@ -92,70 +92,6 @@ hr {
   }
 }
 
-/*********** webkit ***********/
-::-webkit-scrollbar {
-  height: 16px;
-  overflow: visible;
-  width: 16px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, .2);
-  background-clip: padding-box;
-  border: solid transparent;
-  border-width: 1px 1px 1px 6px;
-  min-height: 28px;
-  padding: 100px 0 0;
-  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1),inset 0 -1px 0 rgba(0, 0, 0, .07);
-}
-
-::-webkit-scrollbar-button {
-  height: 0;
-  width: 0;
-}
-
-::-webkit-scrollbar-track {
-  background-clip: padding-box;
-  border: solid transparent;
-  border-width: 0 0 0 4px;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/*********** scrollbar ********/
-#J_app .customScrollBox {
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-}
-
-.dragger_container {
-  position: fixed;
-  z-index: 99;
-  right: 8px;
-  top: 0;
-  width: 10px;
-  height: 100%;
-}
-
-.dragger_container .dragger {
-  position: relative;
-  width: 10px;
-  height: 60px;
-  background: #999;
-  text-align: center;
-  line-height: 60px;
-  color: #666;
-  overflow: hidden;
-  -moz-border-radius: 10px;
-  -khtml-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  border: 1px solid #999;
-}
-
 /*********** layout ***********/
 html, body {
   background: #EAEAEA url('../img/bg.png');
@@ -179,6 +115,7 @@ html, body {
 .content {
   width: 1170px;
   margin: 0 auto;
+  padding-bottom: 50px;
 }
 
 a.brand {
@@ -303,11 +240,11 @@ li.task .actions {
 }
 
 .md-editor {
-  width: 600px;
+  width: 580px;
 }
 
 .md-editor textarea {
-  width: 590px;
+  width: 570px;
   height: 120px;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -529,3 +466,117 @@ thumbnail.thumb-instagram-full{background-image:url(../img/timeline.png?v3.4);ba
 .navigation .timenav .time .time-interval-major{white-space:nowrap;position:absolute;top:5px;left:0px;}
 .navigation .timenav .time .time-interval-major div{background-image:url(../img/point-line.png);background-position:left top;background-repeat:no-repeat;padding-top:15px;position:absolute;height:15px;left:0px;display:block;font-weight:bold;font-size:12px;line-height:20px;text-transform:uppercase;text-align:left;text-indent:0px;white-space:nowrap;color:#333333;margin-left:0px;margin-right:0px;margin-top:1px;z-index:5;}
 .navigation .timenav .time .time-interval-major div strong{font-weight:bold;color:#000000;}
+
+
+
+/* basic scrollbar styling */
+/* vertical scrollbar */
+.mCSB_container{
+  width:auto;
+  margin-right:20px;
+  overflow:hidden;
+}
+.mCSB_container.mCS_no_scrollbar{
+  margin-right:0;
+}
+.mCS_disabled .mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed .mCSB_container.mCS_no_scrollbar{
+  margin-right:20px;
+}
+.mCustomScrollBox .mCSB_scrollTools{
+  width:10px;
+  height:100%;
+  top:0;
+  right:8px;
+}
+.mCSB_scrollTools .mCSB_draggerContainer{
+  height:100%;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
+.mCSB_scrollTools .mCSB_dragger{
+  cursor:pointer;
+  width:100%;
+  height:60px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  width:100%;
+  height:100%;
+  margin:0 auto;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  text-align:center;
+}
+/* horizontal scrollbar */
+.mCSB_horizontal .mCSB_container{
+  height:auto;
+  margin-right:0;
+  margin-bottom:30px;
+  overflow:hidden;
+}
+.mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+  margin-bottom:0;
+}
+.mCS_disabled .mCSB_horizontal .mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+  margin-right:0;
+  margin-bottom:30px;
+}
+.mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools{
+  width:100%;
+  height:16px;
+  top:auto;
+  right:auto;
+  bottom:0;
+  left:0;
+  overflow:hidden;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerContainer{
+  height:100%;
+  width:auto;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft+.mCSB_draggerContainer{
+  padding-bottom:0;
+  padding-right:20px;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger{
+  width:60px;
+  height:100%;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  width:100%;
+  height:100%;
+  margin:6px auto;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* default scrollbar colors and backgrounds */
+.mCustomScrollBox .mCSB_scrollTools{
+  opacity:0.25;
+}
+.mCustomScrollBox:hover .mCSB_scrollTools{
+  opacity:1;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  background:#999; /* rgba fallback */
+  background:rgba(0,0,0,0.25);
+  filter:"alpha(opacity=25)"; -ms-filter:"alpha(opacity=25)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+  background:rgba(0,0,0,0.15);
+  filter:"alpha(opacity=15)"; -ms-filter:"alpha(opacity=15)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+  background:rgba(0,0,0,0.1);
+  filter:"alpha(opacity=10)"; -ms-filter:"alpha(opacity=10)"; /* old ie */
+}
